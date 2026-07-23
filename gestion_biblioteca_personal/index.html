@@ -26,7 +26,7 @@
             <!--encabezado -->
 <nav class="navbar navbar-expand-lg bg-body-tertiary py-1" style="background-color:#5105E0 !important;">
   <div class="container-fluid">
-    <img src="./logo_biblioteca1.jpg" alt="" style="padding: 2px; border-radius: 5px !important; height: 45px;margin-right: 5px;">
+    <img src="./assets/logo_biblioteca1.jpg" alt="" style="padding: 2px; border-radius: 5px !important; height: 45px;margin-right: 5px;">
     <a class="navbar-brand" style=" color: white; font-family: Georgia, 'Times New Roman', Times, serif; font-weight: 600; font-size:large">Biblioteca Personal</a>
     <button class="navbar-toggler navbar-dark" type="button" data-bs-toggle="collapse" data-bs-target="#encabezado" aria-controls="encabezado" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -34,50 +34,161 @@
     <div class="collapse navbar-collapse" id="encabezado">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="./views/registrar.html" style="color: rgba(255, 255, 255, 0.75);">| Registrar Libro |</a>
+          <a class="nav-link active" style="color: white;" aria-current="page" href="#" id="btnMostrarFormulario">| Registrar Libro |</a>
         </li>
       </ul>
     </div>
   </div>
   </nav>
   <!-- barra de herramientas -->
-  <nav class="navbar navbar-expand-lg bg-body-tertiary py-1" style="background-color:#5a06f5 !important;">
+   <nav class="navbar navbar-expand-lg bg-body-tertiary py-1" style="background-color:#5a06f5 !important;">
   <div class="container-fluid">
-    <button class="navbar-toggler navbar-dark ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button  class="navbar-toggler navbar-dark ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-2">
-        <li class="nav-item btn p-0" style="background-color: rgba(255, 255, 255, 0.75);" >
-          <a class="nav-link active py-1 px-2" aria-current="page" href="#">| Filtrar por categoria |</a>
+     <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-2">
+        <li class="nav-item btn p-0" >
+          <form class="d-flex" role="search" id="formBuscar">
+            <input style="border: 2px solid black !important;" class="form-control me-2 form-control-sm border-0" type="search" id="Buscar" placeholder="Busque aqui..." aria-label="Search"/>
+            <button class="btn btn-outline-primary btn-sm" style="background-color: #5105E0 !important;border: 2px solid black;color: white;" type="submit" id="btnBuscar">Buscar</button>
+          </form>
         </li>
-        <li class="nav-item btn p-0" style="background-color: rgba(255, 255, 255, 0.75);">
-         <a class="nav-link active py-1 px-2" aria-current="page" href="#">| Filtrar por estado |</a>
+        <li class="nav-item btn p-0" >
+          <select style="border: 2px solid black !important;color: black;" id="filtroCategoria" class="form-select form-select-sm border-0 ">
+            <option value="">Filtrar por categoria</option>
+          </select>
         </li>
-        <li class="nav-item dropdown btn p-0" style="background-color: rgba(255, 255, 255, 0.75);">
-          <a class="nav-link dropdown-toggle py-1 px-2" href="#" role="button" data-bs-toggle="dropdown" >
+        <li class="nav-item dropdown btn p-0" >
+          <a style="border: 2px solid black !important;" class="nav-link dropdown-toggle py-1 px-2 btn" href="#" role="button" data-bs-toggle="dropdown" >
           |  Ordenar |
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Titulo</a></li>
-            <li><a class="dropdown-item" href="#">Año</a></li>
-               <li><a class="dropdown-item" href="#">Autor</a></li>
+            <li><a class="dropdown-item" href="#" id="Titulo">Titulo</a></li>
+            <li><a class="dropdown-item" href="#" id="año">Año</a></li>
+               <li><a class="dropdown-item" href="#" id="Autor">Autor</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Ascendente</a></li>
-              <li><a class="dropdown-item" href="#">Descendente</a></li>
-
+            <li><a class="dropdown-item" href="#" id="asc">Ascendente</a></li>
+              <li><a class="dropdown-item" href="#" id="desc">Descendente</a></li>
           </ul>
         </li>
         </ul>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2 form-control-sm" type="search" placeholder="Busque aqui..." aria-label="Search" style="background-color: rgba(255, 255, 255, 0.85);"/>
-        <button class="btn btn-outline-light btn-sm" type="submit">Buscar</button>
-      </form>
     </div>
   </div>
 </nav>
     
-        <main></main>
+        <main>
+
+          <div class="row">
+            <!-- barra lateral -->
+             <aside class="col-lg-3 order-2 mb-4">
+              <div class="card shadow-sm mb-3">
+                <div class="card-header text-white" style="background-color:#5105E0 !important;">Filtrar por estado</div>
+                <div class="card-body">
+                  <select id="filtroEstado" class="form-select form-select-sm">
+                    <option value="">Todos</option>
+                    <option value="Disponible">Disponible</option>
+                    <option value="Prestado">Prestado</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="card shadow-sm">
+                <div class="card-header text-white" style="background-color:#5105E0 !important;">Estadísticas</div>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item d-flex justify-content-between">
+                    Total libros <span id="estadoTotal">0</span>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between">
+                    Disponibles <span id="estadoDisponibles">0</span>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between">
+                    Prestados <span id="estadoPrestados">0</span>
+                  </li>
+                </ul>
+                <div class="card-body">
+                  <h6>Por categoría</h6>
+                  <ul id="estadoCategorias" class="list-unstyled mb-0"></ul>
+                </div>
+              </div>
+            </aside>
+
+            <!-- formulario + tabla -->
+              <div class="col-lg-9 order-1">
+
+              <!-- FORMULARIO: oculto hasta que se pulse "Registrar Libro" o "Editar" -->
+              <div class="card shadow-sm w-100 mb-4" style="background-color:#fdfcfe !important; display:none;" id="tarjetaFormulario">
+                  <div class="card-header bg-primary text-white py-3" style="background-color:#5105E0 !important;">
+                      <h2 class="card-title h4 mb-0 text-center" id="tituloFormulario">REGISTRAR LIBRO</h2>
+                  </div>
+
+                  <div class="card-body p-4">
+                      <form id="formLibro">
+
+                          <div class="row g-3">
+                              <div class="col-12">
+                                  <label for="codigo" class="form-label fw-semibold">Ingrese el codigo del libro</label>
+                                  <input type="text" class="form-control" id="codigo" name="codigo" required>
+                              </div>
+                              <div class="col-12">
+                                  <label for="Titulo" class="form-label fw-semibold">Ingrese el titulo del libro</label>
+                                  <input type="text" class="form-control" id="Titulo" name="Titulo" required>
+                              </div>
+                              <div class="col-12">
+                                  <label for="Autor" class="form-label fw-semibold">Ingrese el autor del libro</label>
+                                  <input type="text" class="form-control" id="Autor" name="Autor" required>
+                              </div>
+                              <div class="col-12">
+                                  <label for="Categoria" class="form-label fw-semibold">Ingrese la categoria del libro</label>
+                                  <input type="text" class="form-control" id="Categoria" name="Categoria" required>
+                              </div>
+                              <div class="col-12">
+                                  <label for="año" class="form-label fw-semibold">Ingrese el año de publicacion</label>
+                                  <input type="text" class="form-control" id="año" name="año" required>
+                              </div>
+                              <div class="col-12">
+                                  <label for="Estado" class="form-label fw-semibold">Ingrese el estado del libro</label>
+                                  <select class="form-control" id="Estado" name="Estado" required>
+                                      <option value="Disponible">Disponible</option>
+                                      <option value="Prestado">Prestado</option>
+                                  </select>
+                              </div>
+
+                              <div id="mensajeError" class="text-danger"></div>
+
+                              <!-- Botones -->
+                              <div class="col-12 d-flex justify-content-end gap-2 pt-3">
+                                  <button type="button" id="btnLimpiar" class="btn btn-outline-secondary px-4">Limpiar</button>
+                                  <button type="submit" class="btn btn-primary px-4">Guardar</button>
+                              </div>
+
+                          </div>
+                      </form>
+                  </div>
+              </div>
+
+              <!-- TABLA -->
+              <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                  <thead class="table-dark">
+                    <tr>
+                      <th>Código</th>
+                      <th>Título</th>
+                      <th>Autor</th>
+                      <th>Categoría</th>
+                      <th>Año</th>
+                      <th>Estado</th>
+                      <th>Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody id="cuerpoTabla"></tbody>
+                </table>
+              </div>
+
+            </div>
+          </div>
+        </main>
+
         <footer>
             <!-- place footer here -->
         </footer>
@@ -87,5 +198,6 @@
             integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
             crossorigin="anonymous"
         ></script>
+        
     </body>
 </html>
