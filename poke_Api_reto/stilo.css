@@ -1,0 +1,96 @@
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+/* esa url es para importar un tipo de letra */
+* {
+  margin: 0%;
+  padding: 0%;
+}
+
+body {
+  background-color: #1a1a2e;
+  font-family: "Press Start 2P", Arial;
+}
+
+.titulo {
+  background-color: #5a1a1a;
+  padding: 15px;
+  margin-bottom: 20px;
+  border-bottom: 3px solid #8b4444;
+}
+
+.titulo h1 {
+  text-align: center;
+  color: #e8c97a;
+  margin: 0;
+  font-family: "Press Start 2P", Verdana;
+  font-style: oblique;
+  font-size: 1.5rem;
+}
+
+.barra {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+#buscar {
+  padding: 8px;
+  width: 200px;
+  border: 2px solid #8b4444;
+  border-radius: 10px;
+  background-color: #2a2a4a;
+  color: #e8c97a;
+  font-family: "Press Start 2P", Arial;
+  font-size: 0.6rem;
+}
+
+.btn_buscar {
+  padding: 8px 15px;
+  background-color: #c8a84b;
+  color: #1a1a2e;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: "Press Start 2P", Arial;
+  font-size: 0.6rem;
+}
+
+.btn_volver {
+  padding: 8px 15px;
+  background-color: #5a1a1a;
+  color: #e8c97a;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: "Press Start 2P", Arial;
+  font-size: 0.6rem;
+}
+
+#mensajeError {
+  text-align: center;
+  color: #c0504d;
+  font-size: 0.7rem;
+  margin-top: 10px;
+}
+
+#cargando {
+  text-align: center;
+  font-size: 0.8rem;
+  color: #9090b0;
+  display: none;
+  margin-top: 20px;
+}
+
+#tarjetaspokemon {
+  text-align: center;
+}
+
+#detalle {
+  text-align: center;
+  margin: 20px auto;
+  width: 300px;
+  display: none;
+}
+#detalle h2 {
+  font-size: 0.9rem;
+  word-break: break-word;
+  padding: 0 10px;
+}
