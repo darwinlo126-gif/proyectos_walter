@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-bs-theme="light">
+<html lang="es" data-bs-theme="light">
     <head>
         <title>Biblioteca Virtual</title>
         <!-- Required meta tags -->
@@ -23,60 +23,62 @@
     </style>
     <body class="cuerpo" style="font-family: Georgia, 'Times New Roman', Times, serif;">
         
-            <!--encabezado -->
-<nav class="navbar navbar-expand-lg bg-body-tertiary py-1" style="background-color:#5105E0 !important;">
-  <div class="container-fluid">
-    <img src="./assets/logo_biblioteca1.jpg" alt="" style="padding: 2px; border-radius: 5px !important; height: 45px;margin-right: 5px;">
-    <a class="navbar-brand" style=" color: white; font-family: Georgia, 'Times New Roman', Times, serif; font-weight: 600; font-size:large">Biblioteca Personal</a>
-    <button class="navbar-toggler navbar-dark" type="button" data-bs-toggle="collapse" data-bs-target="#encabezado" aria-controls="encabezado" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="encabezado">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" style="color: white;" aria-current="page" href="#" id="btnMostrarFormulario">| Registrar Libro |</a>
-        </li>
-      </ul>
-    </div>
-  </div>
-  </nav>
-  <!-- barra de herramientas -->
-   <nav class="navbar navbar-expand-lg bg-body-tertiary py-1" style="background-color:#5a06f5 !important;">
-  <div class="container-fluid">
-    <button  class="navbar-toggler navbar-dark ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-     <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-2">
-        <li class="nav-item btn p-0" >
-          <form class="d-flex" role="search" id="formBuscar">
-            <input style="border: 2px solid black !important;" class="form-control me-2 form-control-sm border-0" type="search" id="Buscar" placeholder="Busque aqui..." aria-label="Search"/>
-            <button class="btn btn-outline-primary btn-sm" style="background-color: #5105E0 !important;border: 2px solid black;color: white;" type="submit" id="btnBuscar">Buscar</button>
-          </form>
-        </li>
-        <li class="nav-item btn p-0" >
-          <select style="border: 2px solid black !important;color: black;" id="filtroCategoria" class="form-select form-select-sm border-0 ">
-            <option value="">Filtrar por categoria</option>
-          </select>
-        </li>
-        <li class="nav-item dropdown btn p-0" >
-          <a style="border: 2px solid black !important;" class="nav-link dropdown-toggle py-1 px-2 btn" href="#" role="button" data-bs-toggle="dropdown" >
-          |  Ordenar |
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#" id="Titulo">Titulo</a></li>
-            <li><a class="dropdown-item" href="#" id="año">Año</a></li>
-               <li><a class="dropdown-item" href="#" id="Autor">Autor</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#" id="asc">Ascendente</a></li>
-              <li><a class="dropdown-item" href="#" id="desc">Descendente</a></li>
-          </ul>
-        </li>
-        </ul>
-    </div>
-  </div>
-</nav>
-    
+        <!--encabezado -->
+        <nav class="navbar navbar-expand-lg bg-body-tertiary py-1" style="background-color:#5105E0 !important;">
+          <div class="container-fluid">
+            <img src="./assets/logo_biblioteca1.jpg" alt="" style="padding: 2px; border-radius: 5px !important; height: 45px;margin-right: 5px;">
+            <a class="navbar-brand" style=" color: white; font-family: Georgia, 'Times New Roman', Times, serif; font-weight: 600; font-size:large">Biblioteca Personal</a>
+            <button class="navbar-toggler navbar-dark" type="button" data-bs-toggle="collapse" data-bs-target="#encabezado" aria-controls="encabezado" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="encabezado">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                  <a class="nav-link active" style="color: white;" aria-current="page" href="#" id="btnMostrarFormulario">| Registrar Libro |</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+
+        <!-- barra de herramientas -->
+        <nav class="navbar navbar-expand-lg bg-body-tertiary py-1" style="background-color:#5a06f5 !important;">
+          <div class="container-fluid">
+            <button class="navbar-toggler navbar-dark ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-2">
+                <li class="nav-item btn p-0" >
+                  <form class="d-flex" role="search" id="formBuscar">
+                    <input style="border: 2px solid black !important;" class="form-control me-2 form-control-sm border-0" type="search" id="Buscar" placeholder="Busque aqui..." aria-label="Search"/>
+                    <button class="btn btn-outline-primary btn-sm" style="background-color: #5105E0 !important;border: 2px solid black;color: white;" type="submit" id="btnBuscar">Buscar</button>
+                  </form>
+                </li>
+                <li class="nav-item btn p-0" >
+                  <select style="border: 2px solid black !important;color: black;" id="filtroCategoria" class="form-select form-select-sm border-0 ">
+                    <option value="categoria">Filtrar por categoria</option>
+                    <option value="estado">Filtrar por estado</option>
+                  </select>
+                </li>
+                <li class="nav-item dropdown btn p-0" >
+                  <a style="border: 2px solid black !important;" class="nav-link dropdown-toggle py-1 px-2 btn" href="#" role="button" data-bs-toggle="dropdown" >
+                  |  Ordenar |
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#" id="sortTitulo">Titulo</a></li>
+                    <li><a class="dropdown-item" href="#" id="sortAño">Año</a></li>
+                    <li><a class="dropdown-item" href="#" id="sortAutor">Autor</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#" id="asc">Ascendente</a></li>
+                    <li><a class="dropdown-item" href="#" id="desc">Descendente</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+        
         <main>
 
           <div class="row">
@@ -93,6 +95,7 @@
                 </div>
               </div>
 
+              <!-- Estadisticas -->
               <div class="card shadow-sm">
                 <div class="card-header text-white" style="background-color:#5105E0 !important;">Estadísticas</div>
                 <ul class="list-group list-group-flush">
@@ -114,16 +117,16 @@
             </aside>
 
             <!-- formulario + tabla -->
-              <div class="col-lg-9 order-1">
+            <div class="col-lg-9 order-1">
 
-              <!-- FORMULARIO: oculto hasta que se pulse "Registrar Libro" o "Editar" -->
+              <!-- FORMULARIO -->
               <div class="card shadow-sm w-100 mb-4" style="background-color:#fdfcfe !important; display:none;" id="tarjetaFormulario">
                   <div class="card-header bg-primary text-white py-3" style="background-color:#5105E0 !important;">
                       <h2 class="card-title h4 mb-0 text-center" id="tituloFormulario">REGISTRAR LIBRO</h2>
                   </div>
 
                   <div class="card-body p-4">
-                      <form id="formLibro">
+                      <form id="formularioLibro">
 
                           <div class="row g-3">
                               <div class="col-12">
@@ -189,15 +192,13 @@
           </div>
         </main>
 
-        <footer>
-            <!-- place footer here -->
-        </footer>
-        <!-- Bootstrap JavaScript Bundle (includes Popper) -->
+        <footer></footer>
+
+        <script src="./app.js"></script>
         <script
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
             crossorigin="anonymous"
         ></script>
-        
     </body>
 </html>
