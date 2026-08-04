@@ -1,3 +1,10 @@
+//variables del modal
+let modalLibro = new bootstrap.Modal(document.querySelector("#modalLibro"));
+let modalEliminar = new bootstrap.Modal(document.querySelector("#modalEliminar"));
+let tituloLibroEliminar = document.querySelector("#tituloLibroEliminar");
+let btnConfirmarEliminar = document.querySelector("#btnConfirmarEliminar");
+let codigoAEliminar = "";
+// variables fromulario
 let mostrarFormulario = document.querySelector("#btnMostrarFormulario");
 let formBuscar = document.querySelector("#formBuscar");
 let inputBuscar = document.querySelector("#Buscar");
@@ -13,9 +20,9 @@ let estadoDisponibles = document.querySelector("#estadoDisponibles");
 let estadoPrestados = document.querySelector("#estadoPrestados");
 let estadoCategorias = document.querySelector("#estadoCategorias");
 let tituloFormulario = document.querySelector("#tituloFormulario");
-let tarjetaFormulario = document.querySelector("#tarjetaFormulario");
+
 let formularioLibro = document.querySelector("#formularioLibro");
-let mensajeError = document.querySelector("#mensajeError");
+
 let btnLimpiar = document.querySelector("#btnLimpiar");
 let inputCodigo = document.querySelector("#codigo");
 let inputTitulo = document.querySelector("#Titulo");
@@ -26,6 +33,16 @@ let selectEstado = document.querySelector("#Estado");
 let cuerpoTabla = document.querySelector("#cuerpoTabla");
 
 let libros = []; 
+class Libro {
+    constructor(codigo, Titulo, Autor, Categoria, año, Estado) {
+        this.codigo = codigo;
+        this.Titulo = Titulo;
+        this.Autor = Autor;
+        this.Categoria = Categoria;
+        this.año = año;
+        this.Estado = Estado;
+    }
+}
 
 let editando = false;
 let codigoAEditar = "";
@@ -35,12 +52,11 @@ let sentidoOrden = "asc";
 //muestro el formulario 
 mostrarFormulario.addEventListener('click',(e)=>{
     e.preventDefault();
-    if(tarjetaFormulario.style.display==="none" || tarjetaFormulario.style.display==="")
-    {
-        tarjetaFormulario.style.display="block";
-    }else{
-        tarjetaFormulario.style.display="none";
-    }
+   formularioLibro.reset();
+    editando=false;
+    codigoAEditar="";
+    tituloFormulario.textContent="REGISTRAR LIBRO";
+    modalLibro.show();
 })
 
 // limpiar el formulario 
@@ -50,49 +66,87 @@ btnLimpiar.addEventListener('click',()=>
     editando=false;
     codigoAEditar="";
     tituloFormulario.textContent="REGISTRAR LIBRO";
-    mensajeError.textContent="";
+    modalLibro.hide();
 })
 
 //creo la tabla
 function mostrarArreglo(arreglo) {
-    // Si la lista está vacía, mostramos un mensaje indicando que no hay registros
-    if (arreglo.length === 0) {
-        cuerpoTabla.innerHTML = `
-            <tr>
-                <td colspan="7" class="text-center text-muted py-3">
-                    No hay libros registrados o no coinciden con la búsqueda.
-                </td>
-            </tr>`;
-        return;
-    }
+   //voy a llenar el arreglo utilizando clases dinamicas
+   cuerpoTabla.innerHTML=""; //siempre limpio la tabla antes de volver a llenarla
+   if (arreglo.length===0){
+    let fila=document.createElement("tr");
+    let celda=document.createElement("td");
+    celda.colSpan=7;
+    celda.classList.add("text-center","text-muted","py-3");
+    celda.textContent="No hay libros registrados o no coincide su busqueda";
+    fila.appendChild(celda);
+    cuerpoTabla.appendChild(fila);
+    return;
 
-    cuerpoTabla.innerHTML = arreglo.map((libro) => `
-        <tr>
-            <td>${libro.codigo}</td>
-            <td>${libro.Titulo}</td>
-            <td>${libro.Autor}</td>
-            <td>${libro.Categoria}</td>
-            <td>${libro.año}</td>
-            <td>
-                <span class="badge ${libro.Estado === 'Disponible' ? 'bg-success' : 'bg-warning text-dark'}">
-                    ${libro.Estado}
-                </span>
-            </td>
-            <td>
-                <button class="btn btn-sm btn-warning me-1 btn-editar" data-codigo="${libro.codigo}">Editar</button>
-                <button class="btn btn-sm btn-danger btn-eliminar" data-codigo="${libro.codigo}">Eliminar</button>
-            </td>
-        </tr>
-    `).join('');
+   }
+   arreglo.forEach((libro)=>{
+    let fila =document.createElement("tr");
+    fila.append(crearCelda(libro.codigo));
+     fila.append(crearCelda(libro.Titulo));
+      fila.append(crearCelda(libro.Autor));
+       fila.append(crearCelda(libro.Categoria));
+        fila.append(crearCelda(libro.año));
+
+        //hago la celda del estado con badge y clases dinamicas
+        let celdaEstado=document.createElement("td");
+        let badge=document.createElement("span");
+        badge.classList.add("badge");
+        badge.classList.add(libro.Estado==="Disponible" ? "bg-success": "bg-warning" );
+        if(libro.estado!=="Disponible")badge.classList.add("text-dark");
+        badge.textContent=libro.Estado;
+        celdaEstado.appendChild(badge);
+        fila.appendChild(celdaEstado);
+
+        //celdas de acciones con los botenes de editar y eliminar
+        let celdaAcciones=document.createElement("td");
+        //boton de editar 
+        let btnEditar=document.createElement("button");
+        btnEditar.classList.add("btn","btn-sm","btn-warning","me-1","btn-editar");
+        btnEditar.dataset.codigo=libro.codigo;
+        btnEditar.textContent="Editar";
+        
+        //boton de eliminar
+
+        let btnEliminar=document.createElement("button");
+        btnEliminar.classList.add("btn","btn-sm","btn-danger","btn-eliminar");
+        btnEliminar.dataset.codigo=libro.codigo;
+        btnEliminar.textContent="Eliminar";
+
+
+        celdaAcciones.appendChild(btnEditar);
+        celdaAcciones.appendChild(btnEliminar);
+        fila.appendChild(celdaAcciones);
+        cuerpoTabla.appendChild(fila);
+
+
+
+   });
+
+}
+//hago esta funcion para no repetir el codigo en cada celda simple
+
+function crearCelda(texto) {
+    let celda = document.createElement("td");
+    celda.textContent = texto;
+    return celda;
 }
 
 // valido el formulario
 function validarFormulario(codigo, titulo, autor, categoria, año) {
     if (!codigo || !titulo || !autor || !categoria || !año) {
-        mensajeError.textContent = "Todos los campos son obligatorios.";
+         Swal.fire({
+            icon: "warning",
+            title: "Faltan datos",
+            text: "Todos los campos son obligatorios."
+        });
         return false;
     }
-    mensajeError.textContent = "";
+ 
     return true;
 }
 
@@ -105,12 +159,13 @@ formularioLibro.addEventListener('submit',(e)=>{
        let categoria=inputCategoria.value.trim();
         let año=inputAño.value.trim();
         let estado=selectEstado.value;
+        let mensaje="";
 
     if(!validarFormulario(codigo,titulo,autor,categoria,año)) return;
 
     if(editando){
         // busco con find el libro que tiene el codigo que estoy editando
-        let libro = libros.find(l => l.codigo === codigoAEditar);
+        let libro = libros.find(elemento =>elemento .codigo === codigoAEditar);
         libro.codigo=codigo;
         libro.Titulo=titulo;
         libro.Autor=autor;
@@ -120,15 +175,27 @@ formularioLibro.addEventListener('submit',(e)=>{
 
         editando=false;
         codigoAEditar="";
+        mensaje="El libro se actualizo correctamente"
         tituloFormulario.textContent="REGISTRAR LIBRO";
     }else{
-        let arreglo={codigo,Titulo:titulo,Autor:autor,Categoria:categoria,año,Estado:estado};
-        libros.push(arreglo);
+        let nuevoLibro=new Libro(codigo,titulo,autor,categoria,año,estado);
+        libros=[...libros,nuevoLibro];
+        mensaje="El libro se registro de manera exitosa!";
     }
 
     formularioLibro.reset();
-    tarjetaFormulario.style.display="none";
-    procesarYMostrar();
+     modalLibro.hide(); 
+  
+  ProcesarYMostrar();
+       //  mensaje personalizado 
+    Swal.fire({
+        icon: "success",
+        title: "¡Listo!",
+        text: mensaje,
+        timer: 1800,
+        showConfirmButton: false
+    });
+        
 })
 
 // edito el libro cuando le doy click al boton editar de la tabla
@@ -136,7 +203,7 @@ function editarLibro(e){
     if(!e.target.classList.contains('btn-editar')) return;
 
     let codigo = e.target.dataset.codigo;
-    let libro = libros.find(l => l.codigo === codigo);
+    let libro = libros.find(lib => lib.codigo === codigo);
     if(!libro) return;
 
     inputCodigo.value=libro.codigo;
@@ -149,21 +216,35 @@ function editarLibro(e){
     editando=true;
     codigoAEditar=codigo;
     tituloFormulario.textContent="EDITAR LIBRO";
-    tarjetaFormulario.style.display="block";
+    modalLibro.show();
 }
 
-// elimino el libro cuando le doy click al boton eliminar de la tabla
+// elimino el libro cuando le doy click al boton eliminar dentro del modal
 function eliminarLibro(e){
     if(!e.target.classList.contains('btn-eliminar')) return;
 
     let codigo = e.target.dataset.codigo;
-    let confirmar = confirm("¿Seguro que deseas eliminar este libro?");
-    if(!confirmar) return;
+   let libro=libros.find(lib=>lib.codigo===codigo);
+    if(!libro) return;
 
-    // con filter dejo en libros solo los que no tengan ese codigo
-    libros = libros.filter(l => l.codigo !== codigo);
-    procesarYMostrar();
+   codigoAEliminar=codigo;
+   tituloLibroEliminar.textContent=libro.Titulo;
+   modalEliminar.show();
 }
+
+btnConfirmarEliminar.addEventListener('click',()=>{
+libros=libros.filter(lib=>lib.codigo !==codigoAEliminar);
+codigoAEliminar="";
+modalEliminar.hide();
+ProcesarYMostrar();
+ Swal.fire({
+        icon: "success",
+        title: "Eliminado",
+        text: "El libro se eliminó correctamente.",
+        timer: 1800,
+        showConfirmButton: false
+    });
+})
 
 // pongo los eventos en cuerpoTabla porque los botones se crean despues dinamicamente
 cuerpoTabla.addEventListener('click', editarLibro);
@@ -176,42 +257,88 @@ formBuscar.addEventListener('submit',(e)=>{
 
 // busco en tiempo real mientras escribo
 inputBuscar.addEventListener('input',()=>{
-    procesarYMostrar();
+    ProcesarYMostrar();
 })
 
 // filtro cuando cambio el select de estado
 selectFiltroEstado.addEventListener('change',()=>{
-    procesarYMostrar();
+    ProcesarYMostrar();
 })
+//FILTRO POR CATEGORIA 
+selectFiltroCategoria.addEventListener('change',()=>{
+    
+    ProcesarYMostrar();
+});
 
 // cambio el criterio de orden
 sortTitulo.addEventListener('click',(e)=>{
     e.preventDefault();
     criterioOrden="Titulo";
-    procesarYMostrar();
+    ProcesarYMostrar();
 })
 sortAño.addEventListener('click',(e)=>{
     e.preventDefault();
     criterioOrden="año";
-    procesarYMostrar();
+    ProcesarYMostrar();
 })
 sortAutor.addEventListener('click',(e)=>{
     e.preventDefault();
     criterioOrden="Autor";
-    procesarYMostrar();
+    ProcesarYMostrar();
 })
 
 // cambio el sentido del orden
 sortAsc.addEventListener('click',(e)=>{
     e.preventDefault();
     sentidoOrden="asc";
-    procesarYMostrar();
+    ProcesarYMostrar();
 })
 sortDesc.addEventListener('click',(e)=>{
     e.preventDefault();
     sentidoOrden="desc";
-    procesarYMostrar();
+    ProcesarYMostrar();
 })
+
+// filtro busco y ordeno antes de mostrar la tabla
+
+function ProcesarYMostrar(){
+    let datos=[...libros];
+    // filtro por categoria
+     let categoria=selectFiltroCategoria.value;
+    if(categoria!=="")
+    {
+        datos=datos.filter(categorias=>categorias.Categoria===categoria);
+    }
+
+// filtro de busqueda
+     let texto = inputBuscar.value.trim().toLowerCase();
+    if(texto !== ""){
+        datos = datos.filter(libro =>
+            libro.codigo.toLowerCase().includes(texto) ||
+            libro.Titulo.toLowerCase().includes(texto) ||
+            libro.Autor.toLowerCase().includes(texto)
+        );
+    }
+// filtro por estado 
+     let estado = selectFiltroEstado.value;
+    if(estado !== ""){
+    datos = datos.filter(lib => lib.Estado === estado);
+    }
+    // filtros de ordenamiento 
+     datos.sort((a,b)=>{
+        let valorA = a[criterioOrden].toString().toLowerCase();
+        let valorB = b[criterioOrden].toString().toLowerCase();
+
+        if(valorA < valorB) return sentidoOrden === "asc" ? -1 : 1;
+        if(valorA > valorB) return sentidoOrden === "asc" ? 1 : -1;
+        return 0;
+    });
+   
+
+    mostrarArreglo(datos);
+    actualizarEstadisticas();
+
+}
 
 // actualizo las estadisticas del panel lateral
 function actualizarEstadisticas(){
@@ -233,36 +360,5 @@ function actualizarEstadisticas(){
     `).join('');
 }
 
-// filtro busco y ordeno antes de mostrar la tabla
-function procesarYMostrar(){
-    let datos = [...libros];
-
-    let texto = inputBuscar.value.trim().toLowerCase();
-    if(texto !== ""){
-        datos = datos.filter(l =>
-            l.codigo.toLowerCase().includes(texto) ||
-            l.Titulo.toLowerCase().includes(texto) ||
-            l.Autor.toLowerCase().includes(texto)
-        );
-    }
-
-    let estado = selectFiltroEstado.value;
-    if(estado !== ""){
-        datos = datos.filter(l => l.Estado === estado);
-    }
-
-    datos.sort((a,b)=>{
-        let valorA = a[criterioOrden].toString().toLowerCase();
-        let valorB = b[criterioOrden].toString().toLowerCase();
-
-        if(valorA < valorB) return sentidoOrden === "asc" ? -1 : 1;
-        if(valorA > valorB) return sentidoOrden === "asc" ? 1 : -1;
-        return 0;
-    });
-
-    mostrarArreglo(datos);
-    actualizarEstadisticas();
-}
-
 mostrarArreglo(libros);
-procesarYMostrar();
+ProcesarYMostrar();
