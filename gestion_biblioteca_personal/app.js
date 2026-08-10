@@ -43,12 +43,9 @@ class Libro {
         this.Estado = Estado;
     }
 }
-//genero esta funcion para validar duplicados y no se repita el codigo al agregar o editar
-function existeCodigo(codigo,excluirCodigo=null)
-{
-return libros.some(libro=>libro.codigo===codigo && libro.codigo !==excluirCodigo)
+function existeCodigo(codigo, excluirCodigo = null) {
+    return libros.some(libro => libro.codigo === codigo && libro.codigo !== excluirCodigo);
 }
-
 let editando = false;
 let codigoAEditar = "";
 let criterioOrden = "Titulo"; 
@@ -65,9 +62,8 @@ mostrarFormulario.addEventListener('click',(e)=>{
 })
 
 // limpiar el formulario 
-btnLimpiar.addEventListener('click',(e)=>
+btnLimpiar.addEventListener('click',()=>
 {
-    e.preventDefault();
     formularioLibro.reset();
     editando=false;
     codigoAEditar="";
@@ -178,46 +174,37 @@ formularioLibro.addEventListener('submit',(e)=>{
         let mensaje="";
 
     if(!validarFormulario(codigo,titulo,autor,categoria,año)) return;
-
     if(editando){
-      if(existeCodigo(codigo,codigoAEditar))
-      {
-        Swal.fire({
-            icon:"error",
-            title:"codigo duplicado",
-            text: `Ya existe otro libro con el codigo"${codigo}".`
-        });
+    if(existeCodigo(codigo, codigoAEditar)){
+        Swal.fire({icon:"error", title:"Código duplicado", text:`Ya existe otro libro con el código "${codigo}".`});
         inputCodigo.classList.add('is-invalid');
         inputCodigo.focus();
         return;
-
-      }
-      //creo un nuevo arreglo y lo reemplazo en el arreglo
-      libros=libros.map(li=>
-        li.codigo===codigoAEditar? {...lib,codigo,Titulo:titulo,Autor:autor,Categoria:categoria,año:año,Estado:estado}:lib
-      );
-
-        editando=false;
-        codigoAEditar="";
-        mensaje="El libro se actualizo correctamente"
-        tituloFormulario.textContent="REGISTRAR LIBRO";
-    }else{
-       if(existeCodigo(codigo))
-      {
-        Swal.fire({
-            icon:"error",
-            title:"codigo duplicado",
-            text: `Ya existe otro libro con el codigo"${codigo}".`
-        });
-        inputCodigo.classList.add('is-invalid');
-        inputCodigo.focus();
-        return;
-
-      }
-        let nuevoLibro=new Libro(codigo,titulo,autor,categoria,año,estado);
-        libros=[...libros,nuevoLibro];
-        mensaje="El libro se registro de manera exitosa!";
     }
+
+    // en vez de mutar el objeto, creo uno nuevo con spread y reemplazo en el arreglo
+    libros = libros.map(lib =>
+        lib.codigo === codigoAEditar
+            ? {...lib, codigo, Titulo: titulo, Autor: autor, Categoria: categoria,año: año, Estado: estado}
+            : lib
+    );
+
+    editando=false;
+    codigoAEditar="";
+    mensaje="El libro se actualizo correctamente"
+    tituloFormulario.textContent="REGISTRAR LIBRO";
+}else{
+    if(existeCodigo(codigo)){
+        Swal.fire({icon:"error", title:"Código duplicado", text:`Ya existe un libro con el código "${codigo}".`});
+        inputCodigo.classList.add('is-invalid');
+        inputCodigo.focus();
+        return;
+    }
+
+    let nuevoLibro=new Libro(codigo,titulo,autor,categoria,año,estado);
+    libros=[...libros,nuevoLibro];
+    mensaje="El libro se registro de manera exitosa!";
+}
 
     formularioLibro.reset();
      modalLibro.hide(); 
@@ -233,7 +220,6 @@ formularioLibro.addEventListener('submit',(e)=>{
     });
         
 })
-
 
 // edito el libro cuando le doy click al boton editar de la tabla
 function editarLibro(e){
@@ -270,13 +256,15 @@ function eliminarLibro(e){
 }
 
 btnConfirmarEliminar.addEventListener('click',()=>{
-    let boton=cuerpoTabla.querySelector(`[data-codigo="${codigoAEliminar}"]`);
-    if(boton)boton.closest('tr').remove();
-libros=libros.filter(lib=>lib.codigo !==codigoAEliminar);
-codigoAEliminar="";
-modalEliminar.hide();
-ProcesarYMostrar();
- Swal.fire({
+    // busco el boton de esa fila y elimino el nodo <tr> directamente del DOM
+    let boton = cuerpoTabla.querySelector(`[data-codigo="${codigoAEliminar}"]`);
+    if (boton) boton.closest('tr').remove();
+
+    libros=libros.filter(lib=>lib.codigo !==codigoAEliminar);
+    codigoAEliminar="";
+    modalEliminar.hide();
+    ProcesarYMostrar();
+    Swal.fire({
         icon: "success",
         title: "Eliminado",
         text: "El libro se eliminó correctamente.",
