@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="es" data-bs-theme="light">
+    <head>
+        <title>Biblioteca Virtual</title>
+        <!-- Required meta tags -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <!-- Bootstrap CSS v5.3.8 -->
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+            crossorigin="anonymous"
+        />
+    </head>
+
+    <style>
+        body{
+            margin: 0%;
+            padding: 0%;
+            background-image: url("assets/fondo biblioteca.jpg");
+            background-repeat: no-repeat; /*Hace que la imagen no se repita*/
+            background-position: center;/*Centro la imagen de ancho y altura*/
+            background-attachment: fixed;/*mantengo la imagen fija al hacer scroll*/
+            background-size: cover; /*Esto hace que la imagen cubra el tamño de la pantalla por completo*/
+            
+        }
+    </style>
+    <body class="cuerpo" style="font-family: Georgia, 'Times New Roman', Times, serif;">
+        
+        <!--encabezado -->
+        <nav class="navbar navbar-expand-lg bg-body-tertiary py-1" style="background-color:#5105E0 !important;">
+          <div class="container-fluid">
+            <img src="./assets/logo_biblioteca1.jpg" alt="" style="padding: 2px; border-radius: 5px !important; height: 45px;margin-right: 5px;">
+            <a class="navbar-brand" style=" color: white; font-family: Georgia, 'Times New Roman', Times, serif; font-weight: 600; font-size:large">Biblioteca Personal</a>
+            <button class="navbar-toggler navbar-dark" type="button" data-bs-toggle="collapse" data-bs-target="#encabezado" aria-controls="encabezado" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="encabezado">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                <a class="nav-link active" style="color: white;" aria-current="page" href="#" id="btnMostrarFormulario">| Registrar Libro |</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+
+        <!-- barra de herramientas -->
+        <nav class="navbar navbar-expand-lg bg-body-tertiary py-1" style="background-color:#5a06f5 !important;">
+          <div class="container-fluid">
+            <button class="navbar-toggler navbar-dark ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-2">
+                <li class="nav-item btn p-0" >
+                  <form class="d-flex" role="search" id="formBuscar">
+                    <input style="border: 2px solid black !important;" class="form-control me-2 form-control-sm border-0" type="search" id="Buscar" placeholder="Busque aqui..." aria-label="Search"/>
+                    <button class="btn btn-outline-primary btn-sm" style="background-color: #5105E0 !important;border: 2px solid black;color: white;" type="submit" id="btnBuscar">Buscar</button>
+                  </form>
+                </li>
+                <li class="nav-item btn p-0" >
+                  <select style="border: 2px solid black !important;color: black;" id="filtroCategoria" class="form-select form-select-sm border-0">
+                          <option value="">Filtrar por categoria</option>
+                          <option value="Fantasia">Fantasia</option>
+                          <option value="Amor">Amor</option>
+                          <option value="Terror">Terror</option>
+                          <option value="Accion">Accion</option>
+                    </select>
+                </li>
+                <li class="nav-item dropdown btn p-0" >
+                  <a style="border: 2px solid black !important;" class="nav-link dropdown-toggle py-1 px-2 btn" href="#" role="button" data-bs-toggle="dropdown" >
+                  |  Ordenar |
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#" id="sortTitulo">Titulo</a></li>
+                    <li><a class="dropdown-item" href="#" id="sortAño">Año</a></li>
+                    <li><a class="dropdown-item" href="#" id="sortAutor">Autor</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#" id="asc">Ascendente</a></li>
+                    <li><a class="dropdown-item" href="#" id="desc">Descendente</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+        
+        <main>
+
+          <div class="row">
+            <!-- barra lateral -->
+             <aside class="col-lg-3 order-2 mb-4">
+              <div class="card shadow-sm mb-3">
+                <div class="card-header text-white" style="background-color:#5105E0 !important;">Filtrar por estado</div>
+                <div class="card-body">
+                  <select id="filtroEstado" class="form-select form-select-sm">
+                    <option value="">Todos</option>
+                    <option value="Disponible">Disponible</option>
+                    <option value="Prestado">Prestado</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Estadisticas -->
+              <div class="card shadow-sm">
+                <div class="card-header text-white" style="background-color:#5105E0 !important;">Estadísticas</div>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item d-flex justify-content-between">
+                    Total libros <span id="estadoTotal">0</span>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between">
+                    Disponibles <span id="estadoDisponibles">0</span>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between">
+                    Prestados <span id="estadoPrestados">0</span>
+                  </li>
+                </ul>
+                <div class="card-body">
+                  <h6>Por categoría</h6>
+                  <ul id="estadoCategorias" class="list-unstyled mb-0"></ul>
+                </div>
+              </div>
+            </aside>
+
+            <!-- formulario + tabla -->
+            <div class="col-lg-9 order-1">
+
+              <!-- FORMULARIO -->
+            <div class="modal fade" id="modalLibro" tabindex="-1" aria-labelledby="tituloFormulario" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" style="background-color:#fdfcfe !important;">
+
+      <div class="modal-header text-white" style="background-color:#5105E0 !important;">
+        <h2 class="modal-title h4 mb-0" id="tituloFormulario">REGISTRAR LIBRO</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body p-4">
+        <form id="formularioLibro">
+          <div class="row g-3">
+
+              <div class="col-12">
+                  <label for="codigo" class="form-label fw-semibold">Ingrese el codigo del libro</label>
+                  <input type="text" class="form-control" id="codigo" name="codigo" required>
+              </div>
+              <div class="col-12">
+                  <label for="Titulo" class="form-label fw-semibold">Ingrese el titulo del libro</label>
+                  <input type="text" class="form-control" id="Titulo" name="Titulo" required>
+              </div>
+              <div class="col-12">
+                  <label for="Autor" class="form-label fw-semibold">Ingrese el autor del libro</label>
+                  <input type="text" class="form-control" id="Autor" name="Autor" required>
+              </div>
+              <div class="col-12">
+                  <label for="Categoria" class="form-label fw-semibold">Ingrese la categoria del libro</label>
+                  <select class="form-control" id="Categoria" name="Categoria" required>
+                      <option value="" selected disabled>Seleccione una categoría</option>
+                      <option value="Fantasia">Fantasía</option>
+                      <option value="Amor">Amor</option>
+                      <option value="Terror">Terror</option>
+                      <option value="Accion">Acción</option>
+                  </select>
+              </div>
+              <div class="col-12">
+                  <label for="año" class="form-label fw-semibold">Ingrese el año de publicacion</label>
+                  <input type="text" class="form-control" id="año" name="año" required>
+              </div>
+              <div class="col-12">
+                  <label for="Estado" class="form-label fw-semibold">Ingrese el estado del libro</label>
+                  <select class="form-control" id="Estado" name="Estado" required>
+                      <option value="Disponible">Disponible</option>
+                      <option value="Prestado">Prestado</option>
+                  </select>
+              </div>
+
+          </div>
+
+          <!-- Botones dentro del form, para que el submit funcione con Enter también -->
+          <div class="modal-footer px-0 pb-0 pt-3">
+              <button type="button" id="btnLimpiar" class="btn btn-outline-secondary px-4" data-bs-dismiss="modal">Cancelar</button>
+              <button type="submit" class="btn btn-primary px-4">Guardar</button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- modal de confirmacion -->
+ <div class="modal fade" id="modalEliminar" tabindex="-1" aria-labelledby="tituloEliminar" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header text-white" style="background-color:#5105E0 !important;">
+        <h2 class="modal-title h5 mb-0" id="tituloEliminar">Confirmar eliminación</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        <p class="mb-0">¿Seguro que deseas eliminar el libro <strong id="tituloLibroEliminar"></strong>?</p>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" id="btnConfirmarEliminar">Eliminar</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+              <!-- TABLA -->
+              <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                  <thead class="table-dark">
+                    <tr>
+                      <th>Código</th>
+                      <th>Título</th>
+                      <th>Autor</th>
+                      <th>Categoría</th>
+                      <th>Año</th>
+                      <th>Estado</th>
+                      <th>Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody id="cuerpoTabla"></tbody>
+                </table>
+              </div>
+
+            </div>
+          </div>
+        </main>
+
+        <footer></footer>
+
+     
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+            crossorigin="anonymous"
+        ></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+           <script src="./app.js"></script>
+    </body>
+</html>
