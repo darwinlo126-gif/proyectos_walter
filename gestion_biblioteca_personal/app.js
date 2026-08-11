@@ -43,7 +43,9 @@ class Libro {
         this.Estado = Estado;
     }
 }
-
+function existeCodigo(codigo, excluirCodigo = null) {
+    return libros.some(libro => libro.codigo === codigo && libro.codigo !== excluirCodigo);
+}
 let editando = false;
 let codigoAEditar = "";
 let criterioOrden = "Titulo"; 
@@ -138,16 +140,26 @@ function crearCelda(texto) {
 
 // valido el formulario
 function validarFormulario(codigo, titulo, autor, categoria, año) {
-    if (!codigo || !titulo || !autor || !categoria || !año) {
-         Swal.fire({
-            icon: "warning",
-            title: "Faltan datos",
-            text: "Todos los campos son obligatorios."
-        });
-        return false;
+    let campos = [
+        {valor: codigo, input: inputCodigo},
+        {valor: titulo, input: inputTitulo},
+        {valor: autor, input: inputAutor},
+        {valor: categoria, input: inputCategoria},
+        {valor: año, input: inputAño}
+    ];
+    let valido = true;
+    campos.forEach(campo => {
+        if(!campo.valor){
+            campo.input.classList.add('is-invalid');
+            valido = false;
+        } else {
+            campo.input.classList.remove('is-invalid');
+        }
+    });
+    if(!valido){
+        Swal.fire({icon:"warning", title:"Faltan datos", text:"Todos los campos son obligatorios."});
     }
- 
-    return true;
+    return valido;
 }
 
 //capturo los datos y los muestro en la tabla agregar editar o eliminar
@@ -162,26 +174,37 @@ formularioLibro.addEventListener('submit',(e)=>{
         let mensaje="";
 
     if(!validarFormulario(codigo,titulo,autor,categoria,año)) return;
-
     if(editando){
-        // busco con find el libro que tiene el codigo que estoy editando
-        let libro = libros.find(elemento =>elemento .codigo === codigoAEditar);
-        libro.codigo=codigo;
-        libro.Titulo=titulo;
-        libro.Autor=autor;
-        libro.Categoria=categoria;
-        libro.año=año;
-        libro.Estado=estado;
-
-        editando=false;
-        codigoAEditar="";
-        mensaje="El libro se actualizo correctamente"
-        tituloFormulario.textContent="REGISTRAR LIBRO";
-    }else{
-        let nuevoLibro=new Libro(codigo,titulo,autor,categoria,año,estado);
-        libros=[...libros,nuevoLibro];
-        mensaje="El libro se registro de manera exitosa!";
+    if(existeCodigo(codigo, codigoAEditar)){
+        Swal.fire({icon:"error", title:"Código duplicado", text:`Ya existe otro libro con el código "${codigo}".`});
+        inputCodigo.classList.add('is-invalid');
+        inputCodigo.focus();
+        return;
     }
+
+    // en vez de mutar el objeto, creo uno nuevo con spread y reemplazo en el arreglo
+    libros = libros.map(lib =>
+        lib.codigo === codigoAEditar
+            ? {...lib, codigo, Titulo: titulo, Autor: autor, Categoria: categoria,año: año, Estado: estado}
+            : lib
+    );
+
+    editando=false;
+    codigoAEditar="";
+    mensaje="El libro se actualizo correctamente"
+    tituloFormulario.textContent="REGISTRAR LIBRO";
+}else{
+    if(existeCodigo(codigo)){
+        Swal.fire({icon:"error", title:"Código duplicado", text:`Ya existe un libro con el código "${codigo}".`});
+        inputCodigo.classList.add('is-invalid');
+        inputCodigo.focus();
+        return;
+    }
+
+    let nuevoLibro=new Libro(codigo,titulo,autor,categoria,año,estado);
+    libros=[...libros,nuevoLibro];
+    mensaje="El libro se registro de manera exitosa!";
+}
 
     formularioLibro.reset();
      modalLibro.hide(); 
@@ -233,11 +256,15 @@ function eliminarLibro(e){
 }
 
 btnConfirmarEliminar.addEventListener('click',()=>{
-libros=libros.filter(lib=>lib.codigo !==codigoAEliminar);
-codigoAEliminar="";
-modalEliminar.hide();
-ProcesarYMostrar();
- Swal.fire({
+    // busco el boton de esa fila y elimino el nodo <tr> directamente del DOM
+    let boton = cuerpoTabla.querySelector(`[data-codigo="${codigoAEliminar}"]`);
+    if (boton) boton.closest('tr').remove();
+
+    libros=libros.filter(lib=>lib.codigo !==codigoAEliminar);
+    codigoAEliminar="";
+    modalEliminar.hide();
+    ProcesarYMostrar();
+    Swal.fire({
         icon: "success",
         title: "Eliminado",
         text: "El libro se eliminó correctamente.",
