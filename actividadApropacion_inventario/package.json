@@ -1,0 +1,12 @@
+{
+  "name": "actividadapropacion_inventario",
+  "version": "1.0.0",
+  "description": "actividad apropiacion walter ejemplo",
+  "license": "ISC",
+  "author": "Darwin Otalvaro",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
