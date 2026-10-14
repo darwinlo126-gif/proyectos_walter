@@ -1,21 +1,22 @@
-import Tablap from "./components/Tablap";
+import Footer from "./components/Footer";
+import Navbar from "./components/Navbar";
+
+import PaginaUsuarios from "./pages/PaginaUsuarios";
 
 
-const app=()=>{
+const App=()=>{
   return <>
   <div className="container_fluid">
     <div className="row">
-
-      <Tablap/>
+      <Navbar/>
+      <div className="contenedor mb-5"></div>
+      <PaginaUsuarios/>
     </div>
-
-
-
-
-  </div>
+    <Footer/>
+</div>
   
   
   </>
 
 };
-export default app;
+export default App;

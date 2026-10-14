@@ -13,7 +13,7 @@ export default function PaginaUsuarios(){
     const Tabla=async()=>{
        try{
         const data= await obtenerUsuario();
-        setpersonas(data.results);
+        setpersonas(data);
 
        }catch(error){
         console.error(error);
@@ -22,14 +22,10 @@ export default function PaginaUsuarios(){
 
 
      return (
-    <div className="row">
-      {personas.map((persona) => (
-        // para pintar muchos componentes cada componente debe tener una llave o un estado 
-        <div key={persona.id} className="col-md-3 mb-4">
-        <Tablap persona={persona}/>
+   
+   
+        <Tablap persona={personas}/>
 
-        </div>
-      ))}
-    </div>
+
   );
 }

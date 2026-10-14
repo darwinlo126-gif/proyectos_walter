@@ -1,4 +1,4 @@
-const API=" https://jsonplaceholder.typicode.com/";   
+const API="https://jsonplaceholder.typicode.com/users";   
 export const obtenerUsuario= async(name= "")=>{
     let url=API;
 
@@ -7,7 +7,7 @@ export const obtenerUsuario= async(name= "")=>{
     }
     const response= await fetch(url);
     console.log(response);
-    if(response.ok)
+    if(!response.ok)
     {
         throw new Error("Error al consultar los datos de la api");
 
